@@ -1,0 +1,20 @@
+[package]
+name = "github-ssh-ci-runner"
+version = "1.0.0"
+authors = ["Harald Hoyer <harald@redhat.com>"]
+edition = "2018"
+license = "Apache-2.0"
+
+[dependencies]
+reqwest = { version = "0.10", features = ["blocking", "json"] }
+nix = "0.17.0"
+void = "1.0.2"
+regex = "1.3.7"
+toml = "0.5"
+serde_derive = "1.0"
+serde = "1.0"
+
+[profile.release]
+codegen-units = 1
+incremental = false
+lto = true
