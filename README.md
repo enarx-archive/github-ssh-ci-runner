@@ -28,7 +28,7 @@ The test container can then checkout the git repo via the environment variables:
 
 Also you get a `GITHUB_TOKEN`
 
-On the github actions side you have to run:
+On the github actions side you have to run (with `<YOUR_CI_HOSTNAME>` replaced):
 ```yaml
 jobs:
   build:
@@ -40,15 +40,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        ./.github/scripts/run-remote-ci.sh
-```
-
-with `./.github/scripts/run-remote-ci.sh` and `<YOUR_CI_HOSTNAME>` replaced:
-```bash
-#/bin/bash
-chmod 0700 .ssh
-chmod 0600 .ssh/id_github_test
-exec ssh -T -o "StrictHostKeyChecking no" -i .ssh/id_github_test <YOUR_CI_HOSTNAME> -- "$GITHUB_TOKEN" "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_REF"
+        chmod 0700 .ssh
+        chmod 0600 .ssh/id_github_test
+        exec ssh -T -o "StrictHostKeyChecking no" -i .ssh/id_github_test <YOUR_CI_HOSTNAME> -- "$GITHUB_TOKEN" "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_REF"
 ```
 
 check in the private ssh key in your repo under `.ssh/id_github_test`.
