@@ -58,7 +58,6 @@ impl CiRunner {
 
         let orig_params = std::env::var("SSH_ORIGINAL_COMMAND")?;
 
-        // FIXME: maybe use json
         let params = orig_params.split_ascii_whitespace().collect::<Vec<_>>();
 
         assert_eq!(params.len(), 4);
@@ -80,7 +79,6 @@ impl CiRunner {
     }
 
     pub fn sanity_check_params(&self) -> Result<(), Box<dyn std::error::Error>> {
-        // TODO: check against config.toml
         // Check for valid syntax
         dbg!(&self.git_repo);
         dbg!(&self.git_sha);
