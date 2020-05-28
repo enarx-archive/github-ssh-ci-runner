@@ -35,7 +35,7 @@ Run a custom command (like your specialized CI) on a remote server via github ac
   - `GITHUB_SHA`
   - `GITHUB_REF`
   - `GITHUB_TOKEN`
-  ```
+  ```bash
   git clone "$GITHUB_REPOSITORY" testrepo
   cd testrepo
   git fetch git fetch origin "$GITHUB_REF"
