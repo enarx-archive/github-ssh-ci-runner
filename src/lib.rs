@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 use regex::Regex;
 use reqwest::blocking::Client;
 use reqwest::header;
