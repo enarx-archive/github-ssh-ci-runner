@@ -8,7 +8,7 @@ Run a custom command (like your specialized CI) on a remote server via github ac
 
 - Create a new ssh-key (referenced later with `ssh-pub-key` and `ssh-priv-key`). \
   The public and private part are **both exposed**.
-- Create a `cirunner` user. \
+- Create a `cirunner` user with password login locked (`usermod --lock cirunner`). \
   For extra security configure systemd logind with 
   ```properties
   KillUserProcesses=true
@@ -71,3 +71,30 @@ jobs:
 ```
 
 Watch your remote CI get executed on `push` and `pull_request`.
+
+## Security
+
+Because of `command=` in `.ssh/.authorized_keys` an attacker can only control `"$GITHUB_TOKEN" "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_REF"`.
+
+`github-ssh-ci-runner`
+- sanity checks those parameters
+- checks if `GITHUB_REPOSITORY` is allowed in the config toml
+- checks if the `GITHUB_TOKEN` is valid for the `GITHUB_REPOSITORY` via the github API v3.0
+- checks if `GITHUB_SHA` matches `GITHUB_REF` via the github API v3.0
+- executes the `runner` with only those environment variables set
+
+So, an attacker has to open a valid pull request against the repository.
+
+In this pull request the attacker can modify all parts which are read and executed in the CI, and even modify the original github action.
+
+Therefore the remote side has to ensure, that there is a time limit for the test and all remaining processes are killed.
+
+systemd logind can help with killing of all remaining processes.
+
+A proper cleanup is more difficult. We suggest starting a container, which is automatically cleaned up after the timeout.
+
+As mentioned, a rootless podman container is ideal, if the [timeout](https://github.com/containers/libpod/issues/6412) feature is implemented.
+
+Checkout of the git repo should happen in the container.
+
+File an issue, if you know other attack scenarios.
