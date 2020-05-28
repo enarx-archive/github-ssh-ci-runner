@@ -79,7 +79,8 @@ Because of `command=` in `.ssh/.authorized_keys` an attacker can only control `"
 `github-ssh-ci-runner`
 - sanity checks those parameters
 - checks if `GITHUB_REPOSITORY` is allowed in the config toml
-- checks if the `GITHUB_TOKEN` is valid for the `GITHUB_REPOSITORY` via the github API v3.0
+- checks if the `GITHUB_TOKEN` is valid for the `GITHUB_REPOSITORY` via the github API v3.0 \
+  The `GITHUB_TOKEN` seems to be useable only for one action job run and expires after 60 minutes.
 - checks if `GITHUB_SHA` matches `GITHUB_REF` via the github API v3.0
 - executes the `runner` with only those environment variables set
 
