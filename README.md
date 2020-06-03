@@ -1,3 +1,6 @@
+[![CI](https://github.com/enarx/github-ssh-ci-runner/workflows/Rust/badge.svg)](https://github.com/enarx/github-ssh-ci-runner/actions)
+[![Coverage Status](https://coveralls.io/repos/github/enarx/github-ssh-ci-runner/badge.svg?branch=master)](https://coveralls.io/github/enarx/github-ssh-ci-runner?branch=master)
+
 # github-ssh-ci-runner
 
 Run a custom command (like your specialized CI) on a remote server via github actions on push/pull_requests.
